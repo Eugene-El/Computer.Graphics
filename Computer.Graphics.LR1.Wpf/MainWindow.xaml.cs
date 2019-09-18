@@ -114,42 +114,9 @@ namespace Computer.Graphics.LR1.Wpf
 
                     GL.Begin(PrimitiveType.Lines);
 
-                    // Axis
                     GL.Color3(Color.Red);
 
-                    var fileName = "points.txt";
-                    List<PointF> points = new List<PointF>();
-                    if (File.Exists(fileName))
-                    {
-                        var lines = File.ReadAllLines(fileName);
-                        bool wasSplitter = false;
-                        float prevX = 0, prevY = 0;
-                        foreach (var line in lines)
-                        {
-                            if (line.Contains("#"))
-                                wasSplitter = true;
-                            else
-                            {
-                                if (!wasSplitter)
-                                {
-                                    var coords = line.Split(' ');
-                                    points.Add(new PointF(float.Parse(coords[0]), float.Parse(coords[1])));
-                                }
-                                else
-                                {
-                                    var index = int.Parse(line);
-                                    if (index > 0)
-                                    {
-                                        GL.Vertex2(prevX, prevY);
-                                        GL.Vertex2(points[index - 1].X, points[index - 1].Y);
-                                    }
-                                    prevX = points[Math.Abs(index) - 1].X;
-                                    prevY = points[Math.Abs(index) - 1].Y;
-                                }
-                            }
-                        }
-                    }
-
+                    DrawFromFile("points.txt");
 
                     GL.End();
 
@@ -247,6 +214,86 @@ namespace Computer.Graphics.LR1.Wpf
                 };
 
                 visualWindow.Run(60.0);
+            }
+        }
+
+        private void Task3FileBtn_Click(object sender, RoutedEventArgs e)
+        {
+            using (var visualWindow = new VisualWindow())
+            {
+                visualWindow.Load += (s, args) =>
+                {
+                    visualWindow.VSync = VSyncMode.On;
+                };
+                visualWindow.Resize += (s, args) =>
+                {
+                    GL.Viewport(0, 0, visualWindow.Width, visualWindow.Height);
+                };
+                visualWindow.UpdateFrame += (s, args) =>
+                {
+                };
+                visualWindow.RenderFrame += (s, args) =>
+                {
+                    float left = 0,
+                        right = 300,
+                        down = 0,
+                        up = 100;
+
+
+                    GL.ClearColor(255, 255, 255, 255);
+                    GL.Clear(ClearBufferMask.ColorBufferBit | ClearBufferMask.DepthBufferBit);
+
+                    GL.MatrixMode(MatrixMode.Projection);
+                    GL.LoadIdentity();
+                    GL.Ortho(left, right, down, up, 0, 100);
+
+                    GL.Begin(PrimitiveType.Lines);
+
+                    GL.Color3(Color.Red);
+
+                    DrawFromFile("points2.txt");
+
+                    GL.End();
+
+                    visualWindow.SwapBuffers();
+                };
+
+                visualWindow.Run(60.0);
+            }
+        }
+
+        private void DrawFromFile(string fileName)
+        {
+            List<PointF> points = new List<PointF>();
+            if (File.Exists(fileName))
+            {
+                var lines = File.ReadAllLines(fileName);
+                bool wasSplitter = false;
+                float prevX = 0, prevY = 0;
+                foreach (var line in lines)
+                {
+                    if (line.Contains("#"))
+                        wasSplitter = true;
+                    else
+                    {
+                        if (!wasSplitter)
+                        {
+                            var coords = line.Split(' ');
+                            points.Add(new PointF(float.Parse(coords[0]), float.Parse(coords[1])));
+                        }
+                        else
+                        {
+                            var index = int.Parse(line);
+                            if (index > 0)
+                            {
+                                GL.Vertex2(prevX, prevY);
+                                GL.Vertex2(points[index - 1].X, points[index - 1].Y);
+                            }
+                            prevX = points[Math.Abs(index) - 1].X;
+                            prevY = points[Math.Abs(index) - 1].Y;
+                        }
+                    }
+                }
             }
         }
     }

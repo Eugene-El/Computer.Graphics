@@ -7,6 +7,21 @@
         mc:Ignorable="d"
         Title="MainWindow" Height="450" Width="800">
     <Grid>
+
+        <Grid.RowDefinitions>
+            <RowDefinition Height="auto" />
+            <RowDefinition Height="*" />
+        </Grid.RowDefinitions>
+
+        <StackPanel Grid.Row="0"
+                    Orientation="Horizontal"
+                    Margin="15">
+            <Button
+                x:Name="addExampleBtn"
+                Padding="15 0"
+                Content="Add example"
+                Click="AddExampleBtn_Click"/>
+        </StackPanel>
         
     </Grid>
 </Window>

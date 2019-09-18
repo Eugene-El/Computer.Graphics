@@ -12,24 +12,38 @@
             <RowDefinition Height="*"/>
             <RowDefinition Height="*"/>
         </Grid.RowDefinitions>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="*"/>
+            <ColumnDefinition Width="*"/>
+        </Grid.ColumnDefinitions>
 
         <Button
             Grid.Row="0"
+            Grid.ColumnSpan="2"
             x:Name="task1Btn"
             Margin="10"
             Content="Task 1"
             Click="Task1Btn_Click"/>
         <Button
             Grid.Row="1"
+            Grid.ColumnSpan="2"
             x:Name="task2Btn"
             Margin="10"
             Content="Task 2"
             Click="Task2Btn_Click"/>
         <Button
             Grid.Row="2"
+            Grid.Column="0"
             x:Name="task3Btn"
             Margin="10"
             Content="Task 3"
             Click="Task3Btn_Click"/>
+        <Button
+            Grid.Row="2"
+            Grid.Column="1"
+            x:Name="task3FileBtn"
+            Margin="10"
+            Content="Task 3 File Realization"
+            Click="Task3FileBtn_Click"/>
     </Grid>
 </Window>

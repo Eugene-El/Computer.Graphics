@@ -24,5 +24,10 @@ namespace Computer.Graphics.UniversalApp
         {
             InitializeComponent();
         }
+
+        private void AddExampleBtn_Click(object sender, RoutedEventArgs e)
+        {
+
+        }
     }
 }

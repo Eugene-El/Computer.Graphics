@@ -16,7 +16,7 @@ namespace Computer.Graphics.UniversalApp.DataModels
         public float WorldLeft { get; set; }
         public float WorldRight { get; set; }
         public float WorldBottom { get; set; }
-        public float WorldUp { get; set; }
+        public float WorldTop { get; set; }
 
         // Content
         public List<Coordinates> Coordinates { get; set; }
