@@ -10,5 +10,14 @@ namespace Computer.Graphics.UniversalApp.DataModels
     {
         public float X { get; set; }
         public float Y { get; set; }
+
+        public Coordinates(float x, float y)
+        {
+            X = x;
+            Y = y;
+        }
+
+        public Coordinates() : this(0, 0) { }
+
     }
 }

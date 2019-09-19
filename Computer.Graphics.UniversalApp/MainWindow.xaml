@@ -22,6 +22,59 @@
                 Content="Add example"
                 Click="AddExampleBtn_Click"/>
         </StackPanel>
-        
+        <ScrollViewer Grid.Row="1"
+                      VerticalScrollBarVisibility="Auto"
+                      HorizontalScrollBarVisibility="Disabled">
+        <ItemsControl x:Name="scenesList"
+                      Margin="15">
+            <ItemsControl.ItemsPanel>
+                <ItemsPanelTemplate>
+                    <WrapPanel />
+                </ItemsPanelTemplate>
+            </ItemsControl.ItemsPanel>
+            <ItemsControl.ItemTemplate>
+                <DataTemplate>
+                    <Border BorderThickness="2"
+                            BorderBrush="DimGray"
+                            Background="LightYellow"
+                            Margin="10"
+                            Width="150"
+                            Height="auto">
+                        <Grid
+                            Margin="10">
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition/>
+                                <ColumnDefinition/>
+                            </Grid.ColumnDefinitions>
+                            <Grid.RowDefinitions>
+                                <RowDefinition Height="auto"/>
+                                <RowDefinition Height="auto"/>
+                                <RowDefinition Height="auto"/>
+                                <RowDefinition Height="auto"/>
+                            </Grid.RowDefinitions>
+
+                            <TextBlock Grid.Row="0" Grid.ColumnSpan="2"
+                                        Text="{Binding StringDateTime}"/>
+                            <TextBlock Grid.Row="1" Grid.ColumnSpan="2"
+                                       Text="{Binding Path}"/>
+                            <TextBlock Grid.Row="2" Grid.ColumnSpan="2">
+                                Points count: 
+                                <TextBlock Text="{Binding PointCount}" />
+                            </TextBlock>
+                            <Button Grid.Row="3" Grid.Column="0"
+                                    Content="Open"
+                                    Margin="2"
+                                    Click="OpenButton_Click"/>
+                            <Button Grid.Row="3" Grid.Column="1"
+                                    Content="Edit"
+                                    Margin="2"
+                                    IsEnabled="False"/>
+                        </Grid>
+                    </Border>
+                </DataTemplate>
+            </ItemsControl.ItemTemplate>
+        </ItemsControl>
+        </ScrollViewer>
     </Grid>
 </Window>
+    

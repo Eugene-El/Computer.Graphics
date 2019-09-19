@@ -5,7 +5,6 @@ using OpenTK;
 using OpenTK.Graphics;
 using OpenTK.Graphics.OpenGL;
 using OpenTK.Input;
-
 using VisualWindow = OpenTK.GameWindow;
 using System.IO;
 using System.Collections.Generic;
