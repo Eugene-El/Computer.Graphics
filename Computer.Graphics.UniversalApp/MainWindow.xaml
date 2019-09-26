@@ -6,7 +6,9 @@
         xmlns:local="clr-namespace:Computer.Graphics.UniversalApp"
         mc:Ignorable="d"
         Title="MainWindow" Height="450" Width="800">
-    <Grid>
+    <Grid Drop="Grid_Drop" AllowDrop="True"
+          DragEnter="Grid_DragEnter"
+          DragLeave="Grid_DragLeave">
 
         <Grid.RowDefinitions>
             <RowDefinition Height="auto" />
@@ -21,6 +23,12 @@
                 Padding="15 0"
                 Content="Add example"
                 Click="AddExampleBtn_Click"/>
+            <Button
+                x:Name="loadFileBtn"
+                Padding="15 0"
+                Margin="10 0"
+                Content="Load file"
+                Click="LoadFileBtn_Click"/>
         </StackPanel>
         <ScrollViewer Grid.Row="1"
                       VerticalScrollBarVisibility="Auto"
@@ -51,21 +59,49 @@
                                 <RowDefinition Height="auto"/>
                                 <RowDefinition Height="auto"/>
                                 <RowDefinition Height="auto"/>
+                                <RowDefinition Height="auto"/>
                             </Grid.RowDefinitions>
 
-                            <TextBlock Grid.Row="0" Grid.ColumnSpan="2"
-                                        Text="{Binding StringDateTime}"/>
+                            <Button x:Name="deleteBtn"
+                                    Grid.Row="0" Grid.ColumnSpan="2"
+                                    HorizontalAlignment="Right"
+                                    Click="DeleteBtn_Click">
+                                    <Path Margin="3"
+                                          Stroke="DarkRed"
+                                          StrokeThickness="1.5"
+                                          StrokeStartLineCap="Square"
+                                          StrokeEndLineCap="Square"
+                                          Stretch="Uniform"
+                                          VerticalAlignment="Center"
+                                          HorizontalAlignment="Center">
+                                        <Path.Data>
+                                            <PathGeometry>
+                                                <PathGeometry.Figures>
+                                                    <PathFigure StartPoint="0,0">
+                                                        <LineSegment Point="5,5"/>
+                                                    </PathFigure>
+                                                    <PathFigure StartPoint="0,5">
+                                                        <LineSegment Point="5,0"/>
+                                                    </PathFigure>
+                                                </PathGeometry.Figures>
+                                            </PathGeometry>
+                                        </Path.Data>
+                                    </Path>
+                                </Button>
                             <TextBlock Grid.Row="1" Grid.ColumnSpan="2"
-                                       Text="{Binding Path}"/>
-                            <TextBlock Grid.Row="2" Grid.ColumnSpan="2">
+                                        Text="{Binding StringDateTime}"/>
+                            <TextBlock Grid.Row="2" Grid.ColumnSpan="2"
+                                       Text="{Binding Path}"
+                                       ToolTip="{Binding Path}"/>
+                            <TextBlock Grid.Row="3" Grid.ColumnSpan="2">
                                 Points count: 
                                 <TextBlock Text="{Binding PointCount}" />
                             </TextBlock>
-                            <Button Grid.Row="3" Grid.Column="0"
+                            <Button Grid.Row="4" Grid.Column="0"
                                     Content="Open"
                                     Margin="2"
                                     Click="OpenButton_Click"/>
-                            <Button Grid.Row="3" Grid.Column="1"
+                            <Button Grid.Row="4" Grid.Column="1"
                                     Content="Edit"
                                     Margin="2"
                                     IsEnabled="False"/>
@@ -75,6 +111,26 @@
             </ItemsControl.ItemTemplate>
         </ItemsControl>
         </ScrollViewer>
+
+        <Grid x:Name="hoverer" 
+              Grid.Row="0"
+              Grid.Column="0"
+              Grid.RowSpan="2"
+              Background="LightGray"
+              Opacity="0.75"
+              Visibility="Hidden">
+            <Border Margin="20"
+                    BorderThickness="12"
+                    CornerRadius="20"
+                    BorderBrush="Gray">
+                <Label
+                    VerticalAlignment="Center"
+                    HorizontalAlignment="Center"
+                    FontSize="26"
+                    Foreground="Gray"
+                    Content="Drop file(s) here"/>
+            </Border>
+        </Grid>
     </Grid>
 </Window>
     

@@ -10,6 +10,7 @@ namespace Computer.Graphics.UniversalApp.DataModels
 {
     public class LoadedScene
     {
+        public int Id { get; set; }
         public DateTime LoadDateTime { get; private set; }
         public string StringDateTime { get { return LoadDateTime.ToString("dd.MM.yyyy HH':'mm':'ss"); } }
         public int PointCount { get { return Scene.Coordinates.Count; } }
@@ -18,10 +19,13 @@ namespace Computer.Graphics.UniversalApp.DataModels
 
         public LoadedScene(string path)
         {
+            Id = ++CurrentId;
             Path = path;
             LoadDateTime = DateTime.Now;
             string json = File.ReadAllText(path);
             Scene = JsonConvert.DeserializeObject<Scene>(json);
         }
+
+        public static int CurrentId = 0;
     }
 }

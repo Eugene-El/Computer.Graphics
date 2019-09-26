@@ -1,5 +1,6 @@
 ﻿using Computer.Graphics.UniversalApp.DataModels;
 using Computer.Graphics.UniversalApp.Logic;
+using Microsoft.Win32;
 using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
@@ -75,6 +76,55 @@ namespace Computer.Graphics.UniversalApp
                 new VisualWindow(loadedScene.Scene);
             }
 
+        }
+
+        private void LoadFileBtn_Click(object sender, RoutedEventArgs e)
+        {
+            OpenFileDialog openFileDialog = new OpenFileDialog();
+            openFileDialog.Filter = "JSON files (*.json)|*.json|All files (*.*)|*.*";
+            if (openFileDialog.ShowDialog() == true)
+            {
+                AddScene(new LoadedScene(openFileDialog.FileName));
+            }
+        }
+
+        private void Grid_Drop(object sender, DragEventArgs e)
+        {
+            if (e.Data.GetDataPresent(DataFormats.FileDrop))
+            {
+                string[] files = e.Data.GetData(DataFormats.FileDrop) as string[];
+
+                foreach (string file in files)
+                {
+                    if (file.EndsWith(".json"))
+                    {
+                        AddScene(new LoadedScene(file));
+                    }
+                }
+
+                hoverer.Visibility = Visibility.Hidden;
+            }
+        }
+
+        private void DeleteBtn_Click(object sender, RoutedEventArgs e)
+        {
+            Button button = sender as Button;
+            LoadedScene loadedScene = button?.DataContext as LoadedScene;
+            if (loadedScene != null)
+            {
+                scenesList.ItemsSource = new List<LoadedScene>((scenesList.ItemsSource as List<LoadedScene>)
+                    .Where(ls => ls.Id != loadedScene.Id));
+            }
+        }
+
+        private void Grid_DragEnter(object sender, DragEventArgs e)
+        {
+            hoverer.Visibility = Visibility.Visible;
+        }
+
+        private void Grid_DragLeave(object sender, DragEventArgs e)
+        {
+            hoverer.Visibility = Visibility.Hidden;
         }
     }
 }
