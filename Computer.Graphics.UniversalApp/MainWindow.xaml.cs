@@ -1,9 +1,11 @@
 ﻿using Computer.Graphics.UniversalApp.DataModels;
+using Computer.Graphics.UniversalApp.Edit;
 using Computer.Graphics.UniversalApp.Logic;
 using Microsoft.Win32;
 using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.IO;
 using System.Linq;
 using System.Text;
@@ -48,7 +50,7 @@ namespace Computer.Graphics.UniversalApp
                     new Coordinates(80, 80),
                     new Coordinates(80, -80)
                 },
-                IndexesSequence = new List<int>() { -1, 2, 3, 4, 1 }
+                IndexesSequence = new ObservableCollection<int>() { -1, 2, 3, 4, 1 }
             };
 
             var fileName = "exmapleScene.json";
@@ -75,7 +77,15 @@ namespace Computer.Graphics.UniversalApp
             {
                 new VisualWindow(loadedScene.Scene);
             }
-
+        }
+        private void EditButton_Click(object sender, RoutedEventArgs e)
+        {
+            var loadedScene = (sender as Button)?.DataContext as LoadedScene;
+            if (loadedScene != null)
+            {
+                var scene = loadedScene.Scene;
+                new SceneEdit(ref scene).Show();
+            }
         }
 
         private void LoadFileBtn_Click(object sender, RoutedEventArgs e)

@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -20,6 +21,6 @@ namespace Computer.Graphics.UniversalApp.DataModels
 
         // Content
         public List<Coordinates> Coordinates { get; set; }
-        public List<int> IndexesSequence { get; set; }
+        public ObservableCollection<int> IndexesSequence { get; set; }
     }
 }

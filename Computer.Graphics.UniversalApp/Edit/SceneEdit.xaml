@@ -1,0 +1,119 @@
+﻿<Window x:Class="Computer.Graphics.UniversalApp.Edit.SceneEdit"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:Computer.Graphics.UniversalApp.Edit"
+        mc:Ignorable="d"
+        Title="SceneEdit" Height="600" Width="500">
+    <Window.Resources>
+        <local:IntConverter x:Key="intConverter"/>
+    </Window.Resources>
+    <Grid>
+
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition />
+            <ColumnDefinition />
+        </Grid.ColumnDefinitions>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="auto"/>
+            <RowDefinition Height="auto"/>
+            <RowDefinition Height="auto"/>
+            <RowDefinition Height="auto"/>
+            <RowDefinition Height="auto"/>
+            <RowDefinition Height="auto"/>
+            <RowDefinition Height="*"/>
+        </Grid.RowDefinitions>
+
+        <Label Grid.Row="0" Grid.Column="0"
+               Content="Window width"/>
+        <TextBox Grid.Row="0" Grid.Column="1"
+                 Margin="5"
+                 Text="{Binding WindowWidth}"/>
+
+        <Label Grid.Row="1" Grid.Column="0"
+               Content="Window height"/>
+        <TextBox Grid.Row="1" Grid.Column="1"
+                 Margin="5"
+                 Text="{Binding WindowHeight}"/>
+        
+        <Label Grid.Row="2" Grid.Column="0"
+               Content="World left"/>
+        <TextBox Grid.Row="2" Grid.Column="1"
+                 Margin="5"
+                 Text="{Binding WorldLeft}"/>
+        
+        <Label Grid.Row="3" Grid.Column="0"
+               Content="World right"/>
+        <TextBox Grid.Row="3" Grid.Column="1"
+                 Margin="5"
+                 Text="{Binding WorldRight}"/>
+
+        <Label Grid.Row="4" Grid.Column="0"
+               Content="World bottom"/>
+        <TextBox Grid.Row="4" Grid.Column="1"
+                 Margin="5"
+                 Text="{Binding WorldBottom}"/>
+
+        <Label Grid.Row="5" Grid.Column="0"
+               Content="World top"/>
+        <TextBox Grid.Row="5" Grid.Column="1"
+                 Margin="5"
+                 Text="{Binding WorldTop}"/>
+
+        <Grid Grid.Row="6" Grid.Column="0"
+              Grid.ColumnSpan="2"
+              Margin="5">
+
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition/>
+                <ColumnDefinition Width="100"/>
+            </Grid.ColumnDefinitions>
+            
+            <DataGrid Grid.Column="0"
+                    ItemsSource="{Binding Coordinates}"
+                    AutoGenerateColumns="False"
+                    VerticalScrollBarVisibility="Auto">
+                <DataGrid.Columns>
+                    <DataGridTextColumn Header="X"
+                                        Binding="{Binding X}"
+                                        Width="*"/>
+                    <DataGridTextColumn Header="Y"
+                                        Binding="{Binding Y}"
+                                        Width="*"/>
+                </DataGrid.Columns>
+            </DataGrid>
+
+            <!--<ItemsControl Grid.Column="1"
+                          Margin="15"
+                          ItemsSource="{Binding IndexesSequence}">
+                <ItemsControl.ItemsPanel>
+                    <ItemsPanelTemplate>
+                        <WrapPanel />
+                    </ItemsPanelTemplate>
+                </ItemsControl.ItemsPanel>
+                <ItemsControl.ItemTemplate>
+                    <DataTemplate>
+                        <TextBox
+                            TextChanged="TextBox_TextChanged"
+                            Text="{Binding Path=., UpdateSourceTrigger=PropertyChanged, Mode=TwoWay, Converter={StaticResource intConverter}}">
+                        </TextBox>
+                    </DataTemplate>
+                </ItemsControl.ItemTemplate>
+            </ItemsControl>-->
+
+            <DataGrid Grid.Column="1"
+                    ItemsSource="{Binding IndexesSequence}"
+                    AutoGenerateColumns="False"    
+                    VerticalScrollBarVisibility="Auto">
+                <DataGrid.Columns>
+                    <DataGridTextColumn Header="Indexes"
+                                        Binding="{Binding ., UpdateSourceTrigger=PropertyChanged, Converter={StaticResource intConverter}}"
+                                        Width="*">
+                    </DataGridTextColumn>
+                </DataGrid.Columns>
+            </DataGrid>
+                
+        </Grid>
+    </Grid>
+</Window>
