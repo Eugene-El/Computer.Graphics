@@ -21,6 +21,7 @@ namespace Computer.Graphics.UniversalApp.DataModels
 
         // Content
         public List<Coordinates> Coordinates { get; set; }
-        public ObservableCollection<int> IndexesSequence { get; set; }
+        public List<IntWrapper> IndexesSequence { get; set; }
+        public List<Plane> Planes { get; set; }
     }
 }

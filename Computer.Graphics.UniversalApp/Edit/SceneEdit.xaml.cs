@@ -29,9 +29,13 @@ namespace Computer.Graphics.UniversalApp.Edit
             DataContext = Scene;
         }
 
-        private void TextBox_TextChanged(object sender, TextChangedEventArgs e)
+        private void PlanesGrid_AddingNewItem(object sender, AddingNewItemEventArgs e)
         {
-
+            DataGrid grid = sender as DataGrid;
+            if (grid != null && grid.Items.Count >= 6)
+            {
+                grid.CanUserAddRows = false;
+            }
         }
     }
 }

@@ -50,7 +50,13 @@ namespace Computer.Graphics.UniversalApp
                     new Coordinates(80, 80),
                     new Coordinates(80, -80)
                 },
-                IndexesSequence = new ObservableCollection<int>() { -1, 2, 3, 4, 1 }
+                IndexesSequence = new List<IntWrapper>() {
+                    new IntWrapper(-1),
+                    new IntWrapper(2),
+                    new IntWrapper(3),
+                    new IntWrapper(4),
+                    new IntWrapper(1)
+                }
             };
 
             var fileName = "exmapleScene.json";

@@ -24,6 +24,10 @@ namespace Computer.Graphics.UniversalApp.DataModels
             LoadDateTime = DateTime.Now;
             string json = File.ReadAllText(path);
             Scene = JsonConvert.DeserializeObject<Scene>(json);
+
+            if (Scene.Coordinates == null) Scene.Coordinates = new List<Coordinates>();
+            if (Scene.IndexesSequence == null) Scene.IndexesSequence = new List<IntWrapper>();
+            if (Scene.Planes == null) Scene.Planes = new List<Plane>();
         }
 
         public static int CurrentId = 0;

@@ -92,7 +92,9 @@
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="DataModels\Coordinates.cs" />
+    <Compile Include="DataModels\IntWrapper.cs" />
     <Compile Include="DataModels\LoadedScene.cs" />
+    <Compile Include="DataModels\Plane.cs" />
     <Compile Include="DataModels\Scene.cs" />
     <Compile Include="Edit\IntConverter.cs" />
     <Compile Include="Edit\SceneEdit.xaml.cs">

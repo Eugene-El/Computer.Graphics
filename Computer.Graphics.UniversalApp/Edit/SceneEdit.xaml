@@ -24,42 +24,42 @@
             <RowDefinition Height="auto"/>
             <RowDefinition Height="*"/>
         </Grid.RowDefinitions>
-
+        
         <Label Grid.Row="0" Grid.Column="0"
                Content="Window width"/>
         <TextBox Grid.Row="0" Grid.Column="1"
                  Margin="5"
-                 Text="{Binding WindowWidth}"/>
+                 Text="{Binding WindowWidth, Mode=TwoWay}"/>
 
         <Label Grid.Row="1" Grid.Column="0"
                Content="Window height"/>
         <TextBox Grid.Row="1" Grid.Column="1"
                  Margin="5"
-                 Text="{Binding WindowHeight}"/>
+                 Text="{Binding WindowHeight, Mode=TwoWay}"/>
         
         <Label Grid.Row="2" Grid.Column="0"
                Content="World left"/>
         <TextBox Grid.Row="2" Grid.Column="1"
                  Margin="5"
-                 Text="{Binding WorldLeft}"/>
+                 Text="{Binding WorldLeft, UpdateSourceTrigger=PropertyChanged}"/>
         
         <Label Grid.Row="3" Grid.Column="0"
                Content="World right"/>
         <TextBox Grid.Row="3" Grid.Column="1"
                  Margin="5"
-                 Text="{Binding WorldRight}"/>
+                 Text="{Binding WorldRight, UpdateSourceTrigger=PropertyChanged}"/>
 
         <Label Grid.Row="4" Grid.Column="0"
                Content="World bottom"/>
         <TextBox Grid.Row="4" Grid.Column="1"
                  Margin="5"
-                 Text="{Binding WorldBottom}"/>
+                 Text="{Binding WorldBottom, UpdateSourceTrigger=PropertyChanged}"/>
 
         <Label Grid.Row="5" Grid.Column="0"
                Content="World top"/>
         <TextBox Grid.Row="5" Grid.Column="1"
                  Margin="5"
-                 Text="{Binding WorldTop}"/>
+                 Text="{Binding WorldTop, UpdateSourceTrigger=PropertyChanged}"/>
 
         <Grid Grid.Row="6" Grid.Column="0"
               Grid.ColumnSpan="2"
@@ -69,51 +69,59 @@
                 <ColumnDefinition/>
                 <ColumnDefinition Width="100"/>
             </Grid.ColumnDefinitions>
-            
+            <Grid.RowDefinitions>
+                <RowDefinition/>
+                <RowDefinition Height="100"/>
+            </Grid.RowDefinitions>
+
             <DataGrid Grid.Column="0"
-                    ItemsSource="{Binding Coordinates}"
-                    AutoGenerateColumns="False"
-                    VerticalScrollBarVisibility="Auto">
+                      ItemsSource="{Binding Coordinates, UpdateSourceTrigger=PropertyChanged}"
+                      AutoGenerateColumns="False"
+                      VerticalScrollBarVisibility="Auto">
                 <DataGrid.Columns>
                     <DataGridTextColumn Header="X"
-                                        Binding="{Binding X}"
+                                        Binding="{Binding X, UpdateSourceTrigger=PropertyChanged}"
                                         Width="*"/>
                     <DataGridTextColumn Header="Y"
-                                        Binding="{Binding Y}"
+                                        Binding="{Binding Y, UpdateSourceTrigger=PropertyChanged}"
                                         Width="*"/>
                 </DataGrid.Columns>
             </DataGrid>
-
-            <!--<ItemsControl Grid.Column="1"
-                          Margin="15"
-                          ItemsSource="{Binding IndexesSequence}">
-                <ItemsControl.ItemsPanel>
-                    <ItemsPanelTemplate>
-                        <WrapPanel />
-                    </ItemsPanelTemplate>
-                </ItemsControl.ItemsPanel>
-                <ItemsControl.ItemTemplate>
-                    <DataTemplate>
-                        <TextBox
-                            TextChanged="TextBox_TextChanged"
-                            Text="{Binding Path=., UpdateSourceTrigger=PropertyChanged, Mode=TwoWay, Converter={StaticResource intConverter}}">
-                        </TextBox>
-                    </DataTemplate>
-                </ItemsControl.ItemTemplate>
-            </ItemsControl>-->
-
+            
             <DataGrid Grid.Column="1"
                     ItemsSource="{Binding IndexesSequence}"
                     AutoGenerateColumns="False"    
                     VerticalScrollBarVisibility="Auto">
                 <DataGrid.Columns>
                     <DataGridTextColumn Header="Indexes"
-                                        Binding="{Binding ., UpdateSourceTrigger=PropertyChanged, Converter={StaticResource intConverter}}"
+                                        Binding="{Binding Value, UpdateSourceTrigger=PropertyChanged}"
                                         Width="*">
                     </DataGridTextColumn>
                 </DataGrid.Columns>
             </DataGrid>
-                
+
+            <DataGrid x:Name="planesGrid" Grid.Column="0" Grid.ColumnSpan="2"
+                      Grid.Row="1"
+                      ItemsSource="{Binding Planes, UpdateSourceTrigger=PropertyChanged}"
+                      AutoGenerateColumns="False"    
+                      VerticalScrollBarVisibility="Auto"
+                      CanUserDeleteRows="False"
+                      AddingNewItem="PlanesGrid_AddingNewItem">
+                <DataGrid.Columns>
+                    <DataGridTextColumn Header="A"
+                                        Binding="{Binding A, UpdateSourceTrigger=PropertyChanged}"
+                                        Width="*"/>
+                    <DataGridTextColumn Header="B"
+                                        Binding="{Binding B, UpdateSourceTrigger=PropertyChanged}"
+                                        Width="*"/>
+                    <DataGridTextColumn Header="C"
+                                        Binding="{Binding C, UpdateSourceTrigger=PropertyChanged}"
+                                        Width="*"/>
+                    <DataGridTextColumn Header="D"
+                                        Binding="{Binding D, UpdateSourceTrigger=PropertyChanged}"
+                                        Width="*"/>
+                </DataGrid.Columns>
+            </DataGrid>
         </Grid>
     </Grid>
 </Window>
