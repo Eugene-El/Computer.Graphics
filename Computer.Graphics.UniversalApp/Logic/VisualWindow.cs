@@ -64,8 +64,6 @@ namespace Computer.Graphics.UniversalApp.Logic
                         GL.ClipPlane(PlaneResources[p].ClipPlaneName, scene.Planes[p].Array);
                     }
 
-                    //GL.ClipPlane(ClipPlaneName.ClipPlane0, new double[] { -1d, 3d, 1d, 0d });
-
                     GL.Begin(PrimitiveType.Lines);
                     GL.Color3(System.Drawing.Color.BlueViolet);
                     Coordinates currentCoords = new Coordinates();

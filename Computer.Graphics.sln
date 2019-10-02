@@ -7,6 +7,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Computer.Graphics.LR1.Wpf",
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Computer.Graphics.UniversalApp", "Computer.Graphics.UniversalApp\Computer.Graphics.UniversalApp.csproj", "{21975633-4063-4AD9-A47E-6DF3FE0BEB1A}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Computer.Graphics.LR2.Wpf", "Computer.Graphics.LR2.Wpf\Computer.Graphics.LR2.Wpf.csproj", "{6A1C0C18-1081-4FB8-BDCF-D3F3112A92D4}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -21,6 +23,10 @@ Global
 		{21975633-4063-4AD9-A47E-6DF3FE0BEB1A}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{21975633-4063-4AD9-A47E-6DF3FE0BEB1A}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{21975633-4063-4AD9-A47E-6DF3FE0BEB1A}.Release|Any CPU.Build.0 = Release|Any CPU
+		{6A1C0C18-1081-4FB8-BDCF-D3F3112A92D4}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{6A1C0C18-1081-4FB8-BDCF-D3F3112A92D4}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{6A1C0C18-1081-4FB8-BDCF-D3F3112A92D4}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{6A1C0C18-1081-4FB8-BDCF-D3F3112A92D4}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
