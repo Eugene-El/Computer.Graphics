@@ -10,6 +10,7 @@
         <Grid.RowDefinitions>
             <RowDefinition Height="*"/>
             <RowDefinition Height="*"/>
+            <RowDefinition Height="*"/>
         </Grid.RowDefinitions>
 
         <Button
@@ -25,5 +26,12 @@
             Margin="10"
             Content="Task 3"
             Click="Task3Btn_Click"/>
+        
+        <Button
+            Grid.Row="2"
+            x:Name="task4Btn"
+            Margin="10"
+            Content="Task 4"
+            Click="Task4Btn_Click"/>
     </Grid>
 </Window>
