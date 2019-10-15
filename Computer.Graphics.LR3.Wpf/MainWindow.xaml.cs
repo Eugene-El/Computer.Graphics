@@ -77,6 +77,7 @@ namespace Computer.Graphics.LR3.Wpf
                     GL.MatrixMode(MatrixMode.Projection);
                     GL.LoadIdentity();
                     GL.Ortho(left, right, down, up, 0, 100);
+                    
 
                     GL.Begin(BeginMode.Lines);
                     GL.Vertex2(left, 0);
@@ -109,6 +110,7 @@ namespace Computer.Graphics.LR3.Wpf
         {
             using (var visualWindow = new VisualWindow())
             {
+                double angle = 0, selfAngle = 0, xOffset = 0, yOffset = 0, scale = 1;
                 visualWindow.Load += (s, args) =>
                 {
                     visualWindow.Width = 600;
@@ -129,42 +131,29 @@ namespace Computer.Graphics.LR3.Wpf
                     GL.MatrixMode(MatrixMode.Modelview);
 
                     if (keyboardState.IsKeyDown(OpenTK.Input.Key.Up))
-                        GL.Translate(0, 10, 0);
+                        yOffset += 10;
                     if (keyboardState.IsKeyDown(OpenTK.Input.Key.Down))
-                        GL.Translate(0, -10, 0);
+                        yOffset -= 10;
                     if (keyboardState.IsKeyDown(OpenTK.Input.Key.Left))
-                        GL.Translate(-10, 0, 0);
+                        xOffset -= 10;
                     if (keyboardState.IsKeyDown(OpenTK.Input.Key.Right))
-                        GL.Translate(10, 0, 0);
+                        xOffset += 10;
 
                     if (keyboardState.IsKeyDown(OpenTK.Input.Key.Plus))
-                    {
-                        GL.Translate(150, 50, 0);
-                        GL.Scale(1.1, 1.1, 0);
-                        GL.Translate(-150, -50, 0);
-                    }
-
+                        scale += 0.1;
                     if (keyboardState.IsKeyDown(OpenTK.Input.Key.Minus))
-                    {
-                        GL.Translate(150, 50, 0);
-                        GL.Scale(0.9, 0.9, 0);
-                        GL.Translate(-150, -50, 0);
-                    }
+                        scale -= 0.1;
 
                     if (keyboardState.IsKeyDown(OpenTK.Input.Key.Home))
-                    {
-                        GL.Translate(150, 50, 0);
-                        GL.Rotate(5, 0, 0, 1);
-                        GL.Translate(-150, -50, 0);
-                    }
-
+                        angle += 5;
                     if (keyboardState.IsKeyDown(OpenTK.Input.Key.End))
-                    {
-                        GL.Translate(150, 50, 0);
-                        GL.Rotate(-5, 0, 0, 1);
-                        GL.Translate(-150, -50, 0);
-                    }
+                        angle -= 5;
 
+                    if (keyboardState.IsKeyDown(OpenTK.Input.Key.Q))
+                        selfAngle += 3;
+
+                    if (keyboardState.IsKeyDown(OpenTK.Input.Key.E))
+                        selfAngle -= 3;
                 };
                 visualWindow.RenderFrame += (s, args) =>
                 {
@@ -180,8 +169,22 @@ namespace Computer.Graphics.LR3.Wpf
                     GL.LoadIdentity();
                     GL.Ortho(left, right, down, up, 0, 100);
 
-                    GL.Color3(255, 0, 0);
+                    // Translations
+                    GL.Translate(xOffset, yOffset, 0);
+                    GL.Translate(150, 50, 0);
+                    GL.Scale(scale, scale, 0);
+                    GL.Rotate(angle, 0, 0, 1);
+                    GL.Translate(-150, -50, 0);
+
+
+                    GL.Color3(255.0, 0, 0);
+
                     // T
+                    GL.PushMatrix();
+                    GL.Translate(50, 50, 0);
+                    GL.Rotate(selfAngle, 0, 0, 1);
+                    GL.Translate(-50, -50, 0);
+
                     GL.Begin(BeginMode.LineLoop);
                     GL.Vertex2(10, 80);
                     GL.Vertex2(90, 80);
@@ -192,7 +195,16 @@ namespace Computer.Graphics.LR3.Wpf
                     GL.Vertex2(45, 70);
                     GL.Vertex2(10, 70);
                     GL.End();
+
+                    GL.PopMatrix();
+
+
                     // S
+                    GL.PushMatrix();
+                    GL.Translate(150, 50, 0);
+                    GL.Rotate(-selfAngle, 0, 0, 1);
+                    GL.Translate(-150, -50, 0);
+
                     GL.Begin(BeginMode.LineLoop);
                     GL.Vertex2(190, 80);
                     GL.Vertex2(110, 80);
@@ -207,7 +219,15 @@ namespace Computer.Graphics.LR3.Wpf
                     GL.Vertex2(120, 70);
                     GL.Vertex2(190, 70);
                     GL.End();
+
+                    GL.PopMatrix();
+
                     // I
+                    GL.PushMatrix();
+                    GL.Translate(250, 50, 0);
+                    GL.Rotate(selfAngle, 0, 0, 1);
+                    GL.Translate(-250, -50, 0);
+
                     GL.Begin(BeginMode.LineLoop);
                     GL.Vertex2(265, 80);
                     GL.Vertex2(265, 70);
@@ -222,6 +242,8 @@ namespace Computer.Graphics.LR3.Wpf
                     GL.Vertex2(235, 70);
                     GL.Vertex2(235, 80);
                     GL.End();
+
+                    GL.PopMatrix();
 
                     visualWindow.SwapBuffers();
                 };
