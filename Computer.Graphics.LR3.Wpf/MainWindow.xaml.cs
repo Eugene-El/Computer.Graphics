@@ -32,6 +32,7 @@ namespace Computer.Graphics.LR3.Wpf
 
         private void Task1Btn_Click(object sender, RoutedEventArgs e)
         {
+            double xOffset = 0, yOffset = 0;
             using (var visualWindow = new VisualWindow())
             {
                 visualWindow.Load += (s, args) =>
@@ -55,13 +56,13 @@ namespace Computer.Graphics.LR3.Wpf
                         GL.Translate(20, 20, 0);
 
                     if (keyboardState.IsKeyDown(OpenTK.Input.Key.Up))
-                        GL.Translate(0, 10, 0);
+                        yOffset += 10;
                     if (keyboardState.IsKeyDown(OpenTK.Input.Key.Down))
-                        GL.Translate(0, -10, 0);
+                        yOffset -= 10;
                     if (keyboardState.IsKeyDown(OpenTK.Input.Key.Left))
-                        GL.Translate(-10, 0, 0);
+                        xOffset -= 10;
                     if (keyboardState.IsKeyDown(OpenTK.Input.Key.Right))
-                        GL.Translate(10, 0, 0);
+                        xOffset += 10;
 
                 };
                 visualWindow.RenderFrame += (s, args) =>
@@ -86,6 +87,9 @@ namespace Computer.Graphics.LR3.Wpf
                     GL.Vertex2(0, down);
                     GL.End();
 
+                    GL.PushMatrix();
+                    GL.Translate(xOffset, yOffset, 0);
+
                     GL.Begin(BeginMode.Quads);
 
                     GL.Color3(1.0, 1.0, 1.0);
@@ -98,6 +102,8 @@ namespace Computer.Graphics.LR3.Wpf
                     GL.Vertex2(550, 450);
 
                     GL.End();
+
+                    GL.PopMatrix();
 
                     visualWindow.SwapBuffers();
                 };
