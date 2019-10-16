@@ -32,7 +32,8 @@ namespace Computer.Graphics.LR3.Wpf
 
         private void Task1Btn_Click(object sender, RoutedEventArgs e)
         {
-            double xOffset = 0, yOffset = 0;
+            double baseSpeed = 1, speedUp = 1.2, slowness = 0.95, maxSpeed = 40;
+            double xOffset = 0, yOffset = 0, xSpeed = 0, ySpeed = 0;
             using (var visualWindow = new VisualWindow())
             {
                 visualWindow.Load += (s, args) =>
@@ -52,18 +53,30 @@ namespace Computer.Graphics.LR3.Wpf
                         visualWindow.Exit();
 
                     GL.MatrixMode(MatrixMode.Modelview);
-                    if (keyboardState.IsKeyDown(OpenTK.Input.Key.A))
-                        GL.Translate(20, 20, 0);
 
-                    if (keyboardState.IsKeyDown(OpenTK.Input.Key.Up))
-                        yOffset += 10;
-                    if (keyboardState.IsKeyDown(OpenTK.Input.Key.Down))
-                        yOffset -= 10;
-                    if (keyboardState.IsKeyDown(OpenTK.Input.Key.Left))
-                        xOffset -= 10;
-                    if (keyboardState.IsKeyDown(OpenTK.Input.Key.Right))
-                        xOffset += 10;
+                    if (keyboardState.IsKeyDown(OpenTK.Input.Key.Up) || keyboardState.IsKeyDown(OpenTK.Input.Key.W))
+                        ySpeed = baseSpeed + ySpeed * (ySpeed > 0 ? speedUp : 0);
+                    if (keyboardState.IsKeyDown(OpenTK.Input.Key.Down) || keyboardState.IsKeyDown(OpenTK.Input.Key.S))
+                        ySpeed = -baseSpeed + ySpeed * (ySpeed < 0 ? speedUp : 0);
+                    if (keyboardState.IsKeyDown(OpenTK.Input.Key.Left) || keyboardState.IsKeyDown(OpenTK.Input.Key.A))
+                        xSpeed = -baseSpeed + xSpeed * (xSpeed < 0 ? speedUp : 0);
+                    if (keyboardState.IsKeyDown(OpenTK.Input.Key.Right) || keyboardState.IsKeyDown(OpenTK.Input.Key.D))
+                        xSpeed = baseSpeed + xSpeed * (xSpeed > 0 ? speedUp : 0);
 
+                    // Max speed controll
+                    xSpeed = Math.Abs(xSpeed) < maxSpeed ? xSpeed : maxSpeed * (xSpeed < 0 ? -1 : 1);
+                    ySpeed = Math.Abs(ySpeed) < maxSpeed ? ySpeed : maxSpeed * (ySpeed < 0 ? -1 : 1);
+
+                    // Small speed aprox to 0
+                    if (Math.Abs(xSpeed) < 1) xSpeed = 0;
+                    if (Math.Abs(ySpeed) < 1) ySpeed = 0;
+
+                    // Auto slow speed
+                    xSpeed *= slowness;
+                    ySpeed *= slowness;
+
+                    xOffset += xSpeed;
+                    yOffset += ySpeed;
                 };
                 visualWindow.RenderFrame += (s, args) =>
                 {
