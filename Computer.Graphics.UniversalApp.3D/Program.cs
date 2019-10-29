@@ -11,7 +11,7 @@ namespace Computer.Graphics.UniversalApp._3D
         static void Main(string[] args)
         {
             UniversalWindow universalWindow = new UniversalWindow();
-            universalWindow.Start();
+            universalWindow.Start(args.Length > 0 ? args.FirstOrDefault() : "");
         }
     }
 }

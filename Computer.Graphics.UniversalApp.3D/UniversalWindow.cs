@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Drawing;
 using System.IO;
 using System.Linq;
 using System.Text;
@@ -19,21 +20,29 @@ namespace Computer.Graphics.UniversalApp._3D
     {
         protected Scene _loadedScene;
         protected VisualWindow _visualWindow;
+        protected bool _drawPolygon;
 
-        public void Start()
+        public void Start(string path = "")
         {
+            // Configuration
             double xOffset = 0, yOffset = 0, zOffset = 0,
                 xRotate = 0, yRotate = 0, zRotate = 0,
                 scale = 1,
                 moveSpeed = 3, rotateSpeed = 3, scaleSpeed = 0.05;
             bool perspectiveMode = false, drawAxis = false;
+            _drawPolygon = false;
+
+            // Visual window init
             _visualWindow = new VisualWindow();
             _visualWindow.Load += (s, args) =>
             {
                 _visualWindow.Width = _visualWindow.Height = 400;
                 _visualWindow.VSync = VSyncMode.On;
 
-                LoadDefaultScene();
+                if (string.IsNullOrEmpty(path))
+                    LoadDefaultScene();
+                else
+                    LoadFile(path);
             };
             _visualWindow.Resize += (s, args) =>
             {
@@ -41,16 +50,7 @@ namespace Computer.Graphics.UniversalApp._3D
             };
             _visualWindow.FileDrop += (s, args) =>
             {
-                try
-                {
-                    string json = File.ReadAllText(args.FileName);
-                    LoadScene(JsonConvert.DeserializeObject<Scene>(json));
-                }
-                catch (Exception exception)
-                {
-                    MessageBox.Show(exception.Message, "Load file error",
-                        MessageBoxButton.OK, MessageBoxImage.Error);
-                }
+                LoadFile(args.FileName);
             };
             _visualWindow.UpdateFrame += (s, args) =>
             {
@@ -110,6 +110,10 @@ namespace Computer.Graphics.UniversalApp._3D
                     drawAxis = true;
                 if (keyboardState.IsKeyDown(Key.Z) && keyboardState.IsKeyDown(Key.ShiftLeft))
                     drawAxis = false;
+                if (keyboardState.IsKeyDown(Key.L))
+                    _drawPolygon = true;
+                if (keyboardState.IsKeyDown(Key.L) && keyboardState.IsKeyDown(Key.ShiftLeft))
+                    _drawPolygon = false;
             };
             _visualWindow.RenderFrame += (s, args) =>
             {
@@ -184,6 +188,20 @@ namespace Computer.Graphics.UniversalApp._3D
             _visualWindow.Run(60.0);
         }
 
+        public void LoadFile(string path)
+        {
+            try
+            {
+                string json = File.ReadAllText(path);
+                LoadScene(JsonConvert.DeserializeObject<Scene>(json));
+            }
+            catch (Exception exception)
+            {
+                MessageBox.Show(exception.Message, "Load file error",
+                    MessageBoxButton.OK, MessageBoxImage.Error);
+            }
+        }
+
         protected void DrawParallelepiped(Coordinates coord1, Coordinates coord2)
         {
             float
@@ -212,15 +230,17 @@ namespace Computer.Graphics.UniversalApp._3D
                 new Coordinates(maxX, maxY, minZ),
             };
 
-            BeginMode drawMode = BeginMode.LineStrip;
+            BeginMode drawMode = _drawPolygon ? BeginMode.Polygon : BeginMode.LineStrip;
 
             // Front
+            GL.Color3(Color.Red);
             GL.Begin(drawMode);
             DrawVertex(frontCoordinates[0]);
             DrawVertex(frontCoordinates[1]);
             DrawVertex(frontCoordinates[3]);
             DrawVertex(frontCoordinates[0]);
             GL.End();
+            GL.Color3(Color.Orange);
             GL.Begin(drawMode);
             DrawVertex(frontCoordinates[3]);
             DrawVertex(frontCoordinates[1]);
@@ -228,12 +248,14 @@ namespace Computer.Graphics.UniversalApp._3D
             DrawVertex(frontCoordinates[3]);
             GL.End();
             // Back
+            GL.Color3(Color.OrangeRed);
             GL.Begin(drawMode);
             DrawVertex(backCoordinates[3]);
             DrawVertex(backCoordinates[2]);
             DrawVertex(backCoordinates[0]);
             DrawVertex(backCoordinates[3]);
             GL.End();
+            GL.Color3(Color.YellowGreen);
             GL.Begin(drawMode);
             DrawVertex(backCoordinates[0]);
             DrawVertex(backCoordinates[2]);
@@ -241,12 +263,14 @@ namespace Computer.Graphics.UniversalApp._3D
             DrawVertex(backCoordinates[0]);
             GL.End();
             // Left
+            GL.Color3(Color.LawnGreen);
             GL.Begin(drawMode);
             DrawVertex(frontCoordinates[0]);
             DrawVertex(backCoordinates[0]);
             DrawVertex(backCoordinates[1]);
             DrawVertex(frontCoordinates[0]);
             GL.End();
+            GL.Color3(Color.BlueViolet);
             GL.Begin(drawMode);
             DrawVertex(frontCoordinates[0]);
             DrawVertex(backCoordinates[1]);
@@ -254,12 +278,14 @@ namespace Computer.Graphics.UniversalApp._3D
             DrawVertex(frontCoordinates[0]);
             GL.End();
             // Up
+            GL.Color3(Color.CadetBlue);
             GL.Begin(drawMode);
             DrawVertex(backCoordinates[3]);
             DrawVertex(backCoordinates[0]);
             DrawVertex(frontCoordinates[0]);
             DrawVertex(backCoordinates[3]);
             GL.End();
+            GL.Color3(Color.Green);
             GL.Begin(drawMode);
             DrawVertex(backCoordinates[3]);
             DrawVertex(frontCoordinates[0]);
@@ -267,12 +293,14 @@ namespace Computer.Graphics.UniversalApp._3D
             DrawVertex(backCoordinates[3]);
             GL.End();
             // Right
+            GL.Color3(Color.Purple);
             GL.Begin(drawMode);
             DrawVertex(backCoordinates[3]);
             DrawVertex(frontCoordinates[3]);
             DrawVertex(frontCoordinates[2]);
             DrawVertex(backCoordinates[3]);
             GL.End();
+            GL.Color3(Color.Coral);
             GL.Begin(drawMode);
             DrawVertex(backCoordinates[3]);
             DrawVertex(frontCoordinates[2]);
@@ -280,12 +308,14 @@ namespace Computer.Graphics.UniversalApp._3D
             DrawVertex(backCoordinates[3]);
             GL.End();
             // Down
+            GL.Color3(Color.Aquamarine);
             GL.Begin(drawMode);
             DrawVertex(frontCoordinates[2]);
             DrawVertex(frontCoordinates[1]);
             DrawVertex(backCoordinates[1]);
             DrawVertex(frontCoordinates[2]);
             GL.End();
+            GL.Color3(Color.DodgerBlue);
             GL.Begin(drawMode);
             DrawVertex(frontCoordinates[2]);
             DrawVertex(backCoordinates[1]);
